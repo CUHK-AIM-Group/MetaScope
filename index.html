@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>MetaScope</title>
+        <link rel="icon" type="image/x-icon" href="/static/img/metascope.ico">
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="./static/js/distill_template.v2.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+        <script src="https://rawgit.com/nstrayer/slid3r/master/dist/slid3r.js"></script>
+
+        <script defer="" src="./static/js/hider.js"></script>
+        <script src="./static/js/image_interact.js"></script>
+        <script src="./static/js/switch_videos.js"></script>
+
+        <link rel="stylesheet" href="./static/css/style.css">
+        <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js" integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+            onload="renderMathInElement(document.body);"></script>
+        <script defer src="./static/js/fontawesome.all.min.js"></script>
+
+
+        <!-- medium zoom https://github.com/francoischalifour/medium-zoom -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>  <!-- jquery -->
+        <script defer src="./static/js/medium-zoom.min.js"></script>
+        <script defer src="./static/js/zoom.js"></script>
+    </head>
+
+    <body>
+        <div class="header-wrapper">
+            <div class="header-container" id="header-container">
+                <div class="header-content">
+                    <h1 style="margin-top: 0px">MetaScope: Optics-Driven Neural Network for Ultra-Micro Metalens Endoscopy</h1>
+
+                    <div class="button-container">
+                        <!-- replace arxiv -->
+                        <a href="https://metascope-endo.github.io/" class="button paper-link" target="_blank">
+                            <span class="icon is-small">
+                                <i class="ai ai-arxiv "  style="height: 1.5em;"></i>
+                            </span>
+                            arXiv
+                        </a>
+                        <!-- replace pdf -->
+                        <a href="https://metascope-endo.github.io/" class="button paper-link" target="_blank">
+                            <span class="icon is-small"  style="height: 1.5em;">
+                                <i class="fas fa-file-pdf"></i>
+                            </span>
+                            <span>pdf</span>
+                        </a>
+                        <!-- replace image -->
+                        <a href="https://metascope-endo.github.io/" class="button" target="_blank">
+                            <span class="icon is-small"  style="height: 1.5em;">
+                                <i class="fab fa-github"></i>
+                            </span>
+                            <span>Code</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="header-image">
+                    <img draggable="false" src="static/img/metascope.png" alt="Teaser Image" class="teaser-image">
+                </div>
+            </div>
+        </div>
+    <d-article>
+        <div class="byline">
+            <div class="byline-container" style="text-align: center;">
+                <p>
+                    <a href="https://wymancv.github.io/wuyang.github.io/" class="author-link" target="_blank">Wuyang Li<sup>1,&dagger;</sup></a>,
+                    <a href="https://scholar.google.com/citations?hl=zh-CN&user=sHKkAToAAAAJ&view_op=list_works&sortby=pubdate" class="author-link" target="_blank">Wwentao Pan<sup>1,&dagger;</sup></a>,
+                    <a href="https://scholar.google.com/citations?hl=zh-CN&user=eddLZ4EAAAAJ" class="author-link" target="_blank">Xioayuan Liu<sup>2,&dagger;</sup></a>,
+                    <a href="https://scholar.google.com/citations?user=Nf1DGhEAAAAJ&hl=zh-CN&oi=sra" class="author-link" target="_blank">Zhendong Luo<sup>2</sup></a>,
+                    <a href="https://chenxinli001.github.io/" class="author-link" target="_blank">Chenxin Li<sup>1</sup></a>, <br>
+                    <a href="https://liuhengyu321.github.io/" class="author-link" target="_blank">Hengyu Liu<sup>1</sup></a>,
+                    
+                    <a href="https://scholar.google.com/citations?user=NYqtWsYAAAAJ&hl=zh-CN" class="author-link" target="_blank">Din Ping Tsai<sup>2,*</sup></a>
+                    <a href="https://scholar.google.com/citations?user=ZNUGBioAAAAJ&hl=zh-CN" class="author-link" target="_blank">Mu Ku Chen<sup>2,*</sup></a>
+                    <a href="https://www.ee.cuhk.edu.hk/~yxyuan/people/people.htm" class="author-link" target="_blank">Yixuan Yuan<sup>1,*</sup></a>
+                </p>
+                <p>
+                    <sup>1</sup>CityU <img src="static/img/logo/CityU_logo.png" alt="CityU logo" style="height: 1em; vertical-align: middle; margin-left: 0px; margin-right: 5px;">,
+                    <sup>2</sup>CUHK <img src="static/img/logo/1_CUHK.jpg" alt="CUHK logo" style="height: 1em; vertical-align: middle; margin-left: 0px; margin-right: 5px;">
+                    
+                </p>
+                <p style="text-align: center; margin-bottom: 0;">
+                    <span class="author-note"><sup>&dagger;</sup>Equal Contribution</span>&emsp;
+                    <span class="author-note"><sup>*</sup>Corresponding author</span>
+                </p>
+                <p style="text-align: center; margin-bottom: 0; color: red; font-weight: bold;">
+                    🌟 ICCV 2025 Highlight 🌟 (Final Rating: 6, 6, 6)
+                </p>
+            </div>
+        </div>
+
+
+        <p class="text">
+            <h2 class="text" style="text-align: center;">Abstract</h2>
+            <d-figure id="fig-comparison" >
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/intro.png" alt="benchmark category">
+                </figure>
+            </d-figure>
+            <p class="text">
+
+            Miniaturized endoscopy has advanced accurate visual perception within the human body. 
+            Prevailing research remains limited to conventional cameras employing convex lenses, where the physical constraints with millimetre-scale thickness impose serious impediments on the micro-level clinical. 
+            Recently, with the emergence of meta-optics, ultra-micro imaging based on metalenses (micron-scale) has garnered great attention, 
+            serving as a promising solution. However, due to the physical difference of metalens, there is a large gap in data acquisition and algorithm research. 
+            In light of this, we aim to bridge this unexplored gap, advancing the novel metalens endoscopy:
+            First, we establish datasets for metalens endoscopy and conduct preliminary optical simulation, identifying two derived optical issues that physically adhere to strong optical priors. </li>
+            Second, we propose MetaScope, a novel optics-driven neural network tailored for metalens endoscopy driven by physical optics. MetaScope comprises two novel designs: Optics-informed Intensity Adjustment (OIA), rectifying intensity decay by learning optical embeddings, and Optics-informed Chromatic Correction (OCC), mitigating chromatic aberration by learning spatial deformations informed by learned Point Spread Function (PSF) distributions. </li>
+            To enhance joint learning, we further deploy a gradient-guided distillation to transfer knowledge from the foundational model adaptively. Extensive experiments demonstrate that MetaScope not only outperforms state-of-the-art methods in both metalens segmentation and restoration but also achieves impressive generalized ability in real biomedical scenes.</li>
+            </p>
+        </p>
+
+        <p class="text">
+            <h2 class="text" style="text-align: center;">Motivation</h2>
+            <p class="text">
+            <h3 class="text" >Existing Challenges in Metalens Image</h3>
+            <ul style="padding-left: 0em; margin-left: 0;">
+                <li><b>Color and Position-Dependent Intensity Loss.</b>  Color- and position-dependent intensity loss is caused by wavelength-sensitive meta-atom responses leading to RGB imbalance, and off-axis efficiency drop with cos⁴θ vignetting causing peripheral darkening and structured noise.</li>
+                <li><b>Color-Dependent Blur and Misalignment.</b> Color-dependent blur and misalignment arise from wavelength-dependent PSF variations in metalenses, causing defocus and chromatic fringing due to imperfect phase compensation and focal length mismatch across RGB channels. </li>
+            </ul>
+            <h3 class="text" >Our Solution</h3>
+            <ul style="padding-left: 0em; margin-left: 0;">
+                <li>To fully leverage observed optical priors, we propose to encode the efficiency and radial priors to adjust the feature
+                    learning with restoration awareness</li>
+                <li>We propose a novel solution by estimating the full-color PSF distribution via learning inherent Gaussian mixtures adaptively, thereby spatially
+                    guiding correction of chromatic aberrations</li>
+            </ul>
+
+            </p>
+        </p>
+
+        <p class="text">
+            <h2 class="text" style="text-align: center;">Framework of MetaScope</h2>
+            <d-figure id="fig-framework" >
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/MetaScope_framework.png" alt="framework">
+                </figure>
+            </d-figure>
+            <ul style="padding-left: 0em; margin-left: 0;">
+                <li><b>Optics-informed Intensity Adjustment.</b> 
+                    Metalens images experience severe attenuation in adhering to specific priors.
+                    We design an optics-informed intensity adjustment module to effectively correct channel- and spatial-wise attenuation in metalens images by embedding color- and position-dependent optical priors.</li>
+                <li><b>Optics-informed Chromatic Correction</b> Metalens images suffer from chromatic artifacts due to
+                    wavelength-specific PSFs. Considering the difficulty in estimating explicit PSFs. we model the implicit PFS distribution via Gaussian Mixture Models (GMM) in an adaptive
+                    manner for chromatic correction</li>
+            </ul>
+        </p>
+
+        <p class="text">
+            <h2 class="text" style="text-align: center;">Benchmark</h2>
+            <h3 class="text" >Dataset</h3>
+            <p class="text">
+                We construct five benchmark datasets focused on two key clinical tasks: diagnosis and surgery. 
+                By projecting public datasets onto a screen and capturing them with a metalens system, we generate corresponding image triplets at high resolution. 
+                This supports two research directions—segmentation and restoration using metalens images
+            </p>
+            <h3 class="text" >Metrics</h3>
+            <ol style="padding-left: 0em; margin-left: 0;">
+                <li>Clinical assistance: Metalens segmentation adopts mIoU and mDICE (IoU/DICE for single-class datasets). </li>
+                <li>Clinical visualization: Metalens restoration uses PSNR and SSIM.</li>
+            </ol>
+        </p>
+
+        
+
+        <p class="text">
+            <h2 class="text" style="text-align: center;">Experimental Results</h2>
+            <h3 class="text" >MetaScope Leader Board</h3>
+            <p class="text">
+            Comparison with state-of-the-art methods on five benchmarks in terms of metalens segmentation (top) and restoration (bottom)
+            </p>
+            <d-figure id="fig-framework" >
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/leader.jpg" alt="framework">
+                </figure>
+            </d-figure>
+            
+            <p class="text">
+                Comparison between conventional systems using high quality ground-truth images without Meta, and our metalens system using the degraded images in Meta version dataset.
+            </p>
+            <d-figure id="fig-framework" >
+                <figure style="text-align: center;">
+                    <img data-zoomable="" draggable="false" src="static/img/MetaVSConvex.png" alt="framework" style="width: 70%;">
+                </figure>
+            </d-figure>
+
+
+            <h3 class="text" >Visual Results</h3>
+            <p class="text">
+                Qualitative comparison in terms of state-of-the-art segmentation methods and image restoration methods.
+            </p>
+            <d-figure id="fig-framework" >
+                <figure >
+                    <img data-zoomable="" draggable="false" src="static/img/seg.png" alt="framework">
+                </figure>
+            </d-figure>
+
+            <p class="text">
+                Qualitative comparison of state-of-the-art <b>segmentation</b> methods on Meta-CVC-Colon, Meta-Kvasir-Seg and Meta-EndoVis-18.
+            </p>
+            <d-figure id="fig-framework" >
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/supp_seg.png" alt="framework">
+                </figure>
+            </d-figure>
+
+            <p class="text">
+                Qualitative comparison with state-of-the-art <b>restoration</bb> methods on Meta-CVC-Colon, Meta-Kvasir-Seg and Meta-EndoVis-18.
+            </p>
+            <d-figure id="fig-framework" >
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/resto.png" alt="framework">
+                </figure>
+            </d-figure>
+
+
+            <h3 class="text" >Futher Analysis</h3>
+            <p class="text">
+                Detailed ablation study of the proposed modules on the Meta-CVC-Clinic benchmark
+            </p>
+            <d-figure id="fig-framework" >
+                <figure style="text-align: center;">
+                    <img data-zoomable="" draggable="false" src="static/img/ab.jpg" alt="framework" style="width: 70%;">
+                </figure>
+            </d-figure>
+
+            <p class="text">
+                Heatmaps of the feature before and after each module.
+            </p>
+            <d-figure id="fig-framework" >
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/feat4.png" alt="framework">
+                </figure>
+            </d-figure>
+
+            <p class="text">
+                Sensitivity analysis of the simulated optical prior and hyper-parameters on the Meta-EndoVis-17 benchmark
+            </p>
+            <d-figure id="fig-framework" >
+                <figure style="text-align: center;">
+                    <img data-zoomable="" draggable="false" src="static/img/sen.jpg" alt="framework" style="width: 70%;">
+                </figure>
+            </d-figure>
+
+        </p>
+
+
+        
+            <h3>BibTeX</h3>
+            <p class="bibtex">
+                @article{li2025metascope,<br>
+                &nbsp;&nbsp;title={MetaScope: Optics-Driven Neural Network for Ultra-Micro Metalens Endoscopy},<br>
+                &nbsp;&nbsp;author={Li, Wuyang and Pan, Wentao and Liu, Xiaoyuan and Li, Chenxin and Liu, Hengyu and Tsai, Din Ping and Chen, Mu Ku and Yuan, Yixuan},<br>
+                &nbsp;&nbsp;journal={arXiv preprint},<br>
+                &nbsp;&nbsp;year={2025}<br>
+                }
+            </p>
+            <p class="text">
+                The website template was originally borrowed from <a href="https://cambrian-mllm.github.io/">here</a>.
+            </p>
+            <d-footnote-list></d-footnote-list>
+            <d-citation-list></d-citation-list>
+        
+        <!-- bibliography will be inlined during Distill pipeline's pre-rendering -->
+        
+        <script src="./static/js/nav-bar.js"></script>
+    </body>
+</html>
+
