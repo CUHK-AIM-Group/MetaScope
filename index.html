@@ -1,702 +1,281 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>MetaScope</title>
+        <link rel="icon" type="image/x-icon" href="/static/img/metascope.ico">
 
-<head>
-  <meta charset="utf-8">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta name="description" content="VoxDet: Rethinking 3D Semantic Occupancy Prediction as Dense Object Detection.">
+        <script src="./static/js/distill_template.v2.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-  <meta name="keywords" content="VoxDet, Semantic Occupancy Prediction,Dense Object Detection">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VoxDet: Rethinking 3D Semantic Occupancy Prediction as Dense Object Detection</title>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+        <script src="https://rawgit.com/nstrayer/slid3r/master/dist/slid3r.js"></script>
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
+        <script defer="" src="./static/js/hider.js"></script>
+        <script src="./static/js/image_interact.js"></script>
+        <script src="./static/js/switch_videos.js"></script>
 
-    function gtag() {
-      dataLayer.push(arguments);
-    }
+        <link rel="stylesheet" href="./static/css/style.css">
+        <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 
-    gtag('js', new Date());
-
-    gtag('config', 'G-PYVRSFMDRL');
-  </script>
-
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
-
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/logo.png">
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
-</head>
-
-<body>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js" integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+            onload="renderMathInElement(document.body);"></script>
+        <script defer src="./static/js/fontawesome.all.min.js"></script>
 
 
-  <style>
-    /* --- 原有样式保留 --- */
-    .red-text {
-      color: red;
-    }
+        <!-- medium zoom https://github.com/francoischalifour/medium-zoom -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>  <!-- jquery -->
+        <script defer src="./static/js/medium-zoom.min.js"></script>
+        <script defer src="./static/js/zoom.js"></script>
+    </head>
 
-    /* 容器样式：代替原来的 rotating-cube */
-    #voxel-container {
-      width: 100px;
-      height: 100px;
-      margin: 0 auto 20px;
-      /* 居中并与标题保持间距 */
-    }
+    <body>
+        <div class="header-wrapper">
+            <div class="header-container" id="header-container">
+                <div class="header-content">
+                    <h1 style="margin-top: 0px">MetaScope: Optics-Driven Neural Network for Ultra-Micro Metalens Endoscopy</h1>
 
-    /* Three.js 渲染的 canvas 填满容器 */
-    #voxel-container canvas {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    /* 页面其余样式（摘自原示例） */
-    .hero {
-      padding: 2rem 1rem;
-    }
-
-    .hero-body {
-      padding: 2rem 1rem;
-    }
-
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-    }
-
-    .columns {
-      display: flex;
-      justify-content: center;
-    }
-
-    .column {
-      flex: 0 0 auto;
-    }
-
-    .has-text-centered {
-      text-align: center;
-    }
-
-    .title.is-2 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .publication-title {
-      line-height: 1.2;
-    }
-.publication-title,
-.content p {
-  /* 推荐两者都加，防止任何长字符串溢出 */
-  word-wrap: break-word;      /* 旧写法，兼容性好 */
-  overflow-wrap: break-word;  /* 新写法 */
-  /* 也可以用： word-break: break-all; 
-     但是可能会把英文单词随意断开，通常不推荐 */
-}
-
-    .is-size-4 {
-      font-size: 1.25rem;
-    }
-
-    .publication-authors .author-block {
-      margin-right: 0.5rem;
-    }
-
-    .publication-links {
-      margin-top: 1rem;
-    }
-
-    .link-block {
-      margin: 0 0.25rem;
-    }
-
-    .button {
-      cursor: pointer;
-      padding: 0.5em 1em;
-      border-radius: 4px;
-      border: none;
-      color: #fff;
-      background: #333;
-      text-decoration: none;
-    }
-
-    .button .icon {
-      margin-right: 0.25em;
-    }
-  </style>
-  </head>
-
-  <body>
-    <!-- <section class="hero teaser">
-      <div class="hero-body" >
-        <div class="container is-max-desktop">
-          <div class="columns is-centered">
-            <div class="column has-text-centered">
-
-
-              <div id="voxel-container"></div>
-
-
-              <h1 class="title is-1 publication-title" style="">
-                <span style="color:#036bfc">V</span><span style="color:#3503fc">o</span><span
-                  style="color:#a200ff">x</span><span style="color:#e250ff">Det</span>: Rethinking 3D Semantic Scene
-                Completion as<br>Dense Object Detection
-              </h1>
-
-  
-              <div class="is-size-4 publication-authors">
-                <span class="author-block"><a href="https://wymancv.github.io/wuyang.github.io/">Wuyang
-                    Li</a><sup>1</sup>,</span>
-                <span class="author-block"><a href="#">Zhu Yu</a><sup>2</sup>,</span>
-                <span class="author-block"><a
-                    href="https://scholar.google.com/citations?user=UIhXQ64AAAAJ&hl=en">Alexandre
-                    Alahi</a><sup>1</sup>,</span>
-              </div>
-
-              <div class="is-size-5 publication-authors">
-                <span class="author-block"><sup>1</sup><a href="https://www.epfl.ch/labs/vita/">VITA@EPFL</a>,</span>
-                <span class="author-block"><sup>2</sup>Zhejiang University</span>
-              </div>
-
-              <div class="publication-links">
-                <span class="link-block">
-                  <a href="https://arxiv.org/abs/2506.04623" class="button">
-                    <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span>
-                  </a>
-                </span>
-                <span class="link-block">
-                  <a href="https://github.com/vita-epfl/VoxDet" class="button">
-                    <span class="icon"><i class="fab fa-github"></i></span><span>Code</span>
-                  </a>
-                </span>
-              </div>
-
+                    <div class="button-container">
+                        <!-- replace arxiv -->
+                        <a href="https://metascope-endo.github.io/" class="button paper-link" target="_blank">
+                            <span class="icon is-small">
+                                <i class="ai ai-arxiv "  style="height: 1.5em;"></i>
+                            </span>
+                            arXiv
+                        </a>
+                        <!-- replace pdf -->
+                        <a href="https://metascope-endo.github.io/" class="button paper-link" target="_blank">
+                            <span class="icon is-small"  style="height: 1.5em;">
+                                <i class="fas fa-file-pdf"></i>
+                            </span>
+                            <span>pdf</span>
+                        </a>
+                        <!-- replace image -->
+                        <a href="https://metascope-endo.github.io/" class="button" target="_blank">
+                            <span class="icon is-small"  style="height: 1.5em;">
+                                <i class="fab fa-github"></i>
+                            </span>
+                            <span>Code</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="header-image">
+                    <img draggable="false" src="static/img/metascope.png" alt="Teaser Image" class="teaser-image">
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </section> -->
-
-
-    <section class="hero teaser">
-      <div class="container is-max-desktop">
-        <div class="hero-body" style="text-align: center;">
-          <div id="voxel-container"></div>
-              <h1 class="title is-1 publication-title">
-                <span style="color:#036bfc">V</span><span style="color:#3503fc">o</span><span
-                  style="color:#a200ff">x</span><span style="color:#e250ff">Det</span>: Rethinking 3D Semantic Occupancy Prediction as Dense Object Detection
-              </h1>
-                        <div class="is-size-4 publication-authors">
-                <span class="author-block"><a href="https://wymancv.github.io/wuyang.github.io/">Wuyang
-                    Li</a><sup>1</sup>,</span>
-                <span class="author-block"><a href="#">Zhu Yu</a><sup>2</sup>,</span>
-                <span class="author-block"><a
-                    href="https://scholar.google.com/citations?user=UIhXQ64AAAAJ&hl=en">Alexandre
-                    Alahi</a><sup>1</sup>,</span>
-              </div>
-                  <div class="is-size-5 publication-authors">
-                <span class="author-block"><sup>1</sup><a href="https://www.epfl.ch/labs/vita/">VITA@EPFL</a>,</span>
-                <span class="author-block"><sup>2</sup>Zhejiang University</span>
-              </div>
-              <div class="publication-links">
-                <span class="link-block">
-                  <a href="https://arxiv.org/abs/2506.04623" class="button">
-                    <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span>
-                  </a>
-                </span>
-                <span class="link-block">
-                  <a href="https://github.com/vita-epfl/VoxDet" class="button">
-                    <span class="icon"><i class="fab fa-github"></i></span><span>Code</span>
-                  </a>
-                </span>
-              </div>
-
-        </div>
-      </div>
-    </section>
-
-
-
-
-    <!-- https://github.com/vita-epfl/VoxDet -->
-
-
-    <section class="hero teaser">
-      <div class="container is-max-desktop">
-        <div class="hero-body" style="text-align: center;">
-          <h2 class="title is-3">Too Long; Don't Read</h2>
-          <div class="hero-body" style="text-align: left;">
-            <p style="font-size: 18px;">
-              <strong>VoxDet</strong> address semantic occupancy prediction with an instance-centric formulation
-              inspried by dense object detection, which uses a Voxel-to-Instance (<strong>VoxNT</strong>) trick freely
-              transferring voxel-level class labels to instance-level offset labels.
-            </p>
-          </div>
-          <div style="display: flex; justify-content: center; margin-top: 10px;">
-            <img src="./static/images/head.png" style="width:80%; height: auto; margin-top: -40px;" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-
-
-    <section class="hero teaser">
-      <div class="container is-max-desktop">
-        <div class="hero-body" style="text-align: center;">
-          <h2 class="title is-3">Key Features</h2>
-          <div class="hero-body" style="text-align: left;">
-            <p style="font-size: 18px;">
-            <ul style="text-align: left; margin: 0 auto; display: inline-block;font-size: 18px; ">
-              <li><strong>Versatile:</strong> Adaptable to various voxel-based scenarios, such as <a class="red-text">
-                  camera and LiDAR</a> settings.</li>
-              <li><strong>Powerful:</strong> Achieve <a class="red-text">joint state-of-the-art</a> on camera-based and
-                LiDAR-based benchmarks.</li>
-              <li><strong>Efficient:</strong> <a class="red-text">Fast</a> (~1.3× speed-up) and <a
-                  class="red-text">lightweight</a> (reducing ~57.9% parameters).</li>
-              <li><strong>Leaderboard Topper:</strong> Achieve <a class="red-text">63.0 IoU</a> (single-frame &
-                single-model & no extra
-                data/labels), securing <a class="red-text">1st</a> place on the online SemanticKITTI leaderboard.</li>
-            </ul>
-            </p>
-          </div>
-          <div style="display: flex; justify-content: center; margin-top: 10px;">
-            <img src="./static/images/feature.png" style="width:80%; height: auto; margin-top: -40px;" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-
-    <section class="hero teaser">
-      <div class="container is-max-desktop">
-        <div class="hero-body" style="text-align: center;">
-          <h2 class="title is-3">Observation: Free Lunch in Voxel Labels</h2>
-          <div class="hero-body" style="text-align: left;">
-            <p style="font-size: 18px;">
-              <strong>Free Lunch:</strong> Voxel-level class labels inherently provide instance-level insights, which
-              have been overlooked by the community. Specifically, <a class="red-text">when only class labels (and
-                not instance labels) are available</a> <br>
-              <strong>Left:</strong> Pixel-level class labels <a class="red-text">fail</a> to discover or
-              regress instances due to 2D occlusion. <br>
-              <strong>Right:</strong> Voxel-level class labels <a class="red-text">can</a> discover and
-              regress instances thanks to their occlusion-free nature in 3D. <br>
-
-            </p>
-          </div>
-          <div style="display: flex; justify-content: center; margin-top: 10px;">
-            <img src="./static/images/motivation.png" style="width:80%; height: auto; margin-top: -40px;" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="hero teaser">
-      <div class="container is-max-desktop">
-        <div class="hero-body" style="text-align: center;">
-          <h2 class="title is-3">VoxNT Trick: Generate Free Offset Labels</h2>
-          <div class="hero-body" style="text-align: left;">
-            <p style="font-size: 18px;">
-              <strong>VoxNT</strong> trick can freely transfer the voxel-level class labels to the instance-level offset
-              labels by fully utilizing the observed free lunch mentioned above, which densely scans across 6 directions
-              (x⁺, x⁻, y⁺, y⁻, z⁺, z⁻) and stops when the voxel label changes, indicating approaching object borders.
-              <br>
-            </p>
-          </div>
-          <div style="display: flex; justify-content: center; margin-top: 10px;">
-            <img src="./static/images/VItrick.png" style="width:90%; height: auto; margin-top: -40px;" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-
-
-    <section class="hero teaser">
-      <div class="container is-max-desktop">
-        <div class="hero-body" style="text-align: center;">
-          <h2 class="title is-3">VoxDet: Fully Using the Generated Free Offset Labels</h2>
-          <div class="hero-body" style="text-align: left;">
-            <p style="font-size: 18px;">
-              <strong>VoxDet</strong> reformulates the voxel-level occupancy prediction as instance-level dense object
-              detection to achieve
-              instance-centric learning, which decouples it into two sub-tasks: offset regression and semantic
-              prediction. This is based on the generated offset labels from the <strong>VoxNT</strong> trick.
-              <br>
-            </p>
-          </div>
-          <div style="display: flex; justify-content: center; margin-top: 10px;">
-            <img src="./static/images/overall.png" style="width:90%; height: auto; margin-top: -40px;" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-
-
-
-    <section class="hero teaser">
-      <div class="container is-max-desktop">
-        <div class="hero-body" style="text-align: center;">
-          <h2 class="title is-3">Qualitative Comparison</h2>
-          <div class="hero-body" style="text-align: left;">
-            <!-- <p style="font-size: 18px;"> -->
-            <!-- VoxDet reformulates the voxel-level SSC as dense object detection to achieve instance-centric learning, which decouples it into two sub-tasks: offset regression and semantic prediction. This is based on the generated offset labels from VoxNT trick. -->
-            <!-- <br> -->
-            </p>
-          </div>
-          <div style="display: flex; justify-content: center; margin-top: 10px;">
-            <img src="./static/images/comparison.png" style="width:90%; height: auto; margin-top: -40px;" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-
-
-    <section class="hero teaser">
-      <div class="container is-max-desktop">
-        <div class="hero-body" style="text-align: center;">
-          <h2 class="title is-3">Camera/LiDAR-based Benchmarks</h2>
-          <div class="hero-body" style="text-align: left;">
-            <p style="font-size: 18px;">
-              <strong>VoxDet</strong> achieves state-of-the-art performance on the camera-based benchmarks,
-              including SemanticKITTI and SSCBench-KITTI-360 (the 1st and 2nd tables), and LiDAR-based
-              SemanticKITTI benchmark (the
-              3rd table).
-              <br>
-            </p>
-          </div>
-          <div style="display: flex; justify-content: center; margin-top: 10px;">
-            <img src="./static/images/semantickitti_camera.png" style="width:90%; height: auto; margin-top: -40px;" />
-
-          </div>
-          <div style="display: flex; justify-content: center; margin-top: 0px;">
-            <img src="./static/images/kitti360.png" width="90%" />
-          </div>
-
-          <div style="display: flex; justify-content: center; margin-top: 0px;">
-            <img src="./static/images/semantickitti_lidar.png" width="90%" />
-          </div>
-
-        </div>
-      </div>
-      </div>
-    </section>
-
-    <section class="hero teaser">
-      <div class="container is-max-desktop">
-        <div class="hero-body" style="text-align: center;">
-          <h2 class="title is-3">Model Efficiency & Monocular Adaptation</h2>
-          <div class="hero-body" style="text-align: left;">
-            <p style="font-size: 18px;">
-              <strong>VoxDet</strong> is highly effcienct (<strong>Left</strong>) regarding model parameters and
-              inference speed. Besides, <strong>VoxDet</strong> achieves the best results using monocular depth
-              (<strong>Right</strong>).
-              <br>
-            </p>
-          </div>
-          <div style="display: flex; justify-content: center; margin-top: 10px;">
-            <img src="./static/images/eff_mono.png" style="width:90%; height: auto; margin-top: -40px;" />
-
-          </div>
-
-
-        </div>
-      </div>
-      </div>
-    </section>
-
-
-
-    <!-- <section class="section">
-      <div class="container is-max-desktop">
-        <div class="columns is-centered has-text-centered">
-          <div class="column is-four-fifths">
-            <h2 class="title is-3">Abstract</h2>
-            <div class="content has-text-justified">
-
-              <p>
-                3D semantic occupancy prediction aims to reconstruct the 3D geometry and semantics of the surrounding
-                environment. With dense voxel labels, prior works typically formulate it as a dense segmentation task,
-                independently classifying each voxel. However, this paradigm neglects critical instance-centric
-                discriminability, leading to instance-level incompleteness and adjacent ambiguities. To address this, we
-                highlight a free lunch of occupancy labels: the voxel-level class label implicitly provides insight at
-                the instance level, which is overlooked by
-                the community. Motivated by this observation, we first introduce a training-free Voxel-to-Instance
-                (VoxNT) trick: a simple yet effective method that freely converts voxel-level class labels into
-                instance-level offset labels. Building on this, we further propose VoxDet, an instance-centric framework
-                that reformulates the voxel-level occupancy prediction as dense object detection by decoupling it into
-                two sub-tasks: offset regression and semantic prediction. Specifically, based on the lifted 3D volume,
-                VoxDet first
-                uses (a) Spatially-decoupled Voxel Encoder to generate disentangled feature volumes for the two
-                sub-tasks, which learn task-specific spatial deformation in the densely projected tri-perceptive space.
-                Then, we deploy (b) Task-decoupled Dense Predictor to address this task via dense detection. Here, we
-                first regress a 4D offset field to estimate distances (6 directions) between voxels and object borders
-                in the voxel space. The regressed offsets are then used to
-                guide the instance-level aggregation in the classification branch, achieving instance-aware prediction.
-                Experiments show that VoxDet can be deployed on both camera and LiDAR input, jointly achieving
-                state-of-the-art results on both benchmarks. VoxDet is not only highly efficient, but also gives 63.0
-                IoU on the SemanticKITTI test set, ranking 1st on the online leaderboard.
-
-              </p>
-
+    <d-article>
+        <div class="byline">
+            <div class="byline-container" style="text-align: center;">
+                <p>
+                    <a href="https://wymancv.github.io/wuyang.github.io/" class="author-link" target="_blank">Wuyang Li<sup>1,&dagger;</sup></a>,
+                    <a href="https://scholar.google.com/citations?hl=zh-CN&user=sHKkAToAAAAJ&view_op=list_works&sortby=pubdate" class="author-link" target="_blank">Wwentao Pan<sup>1,&dagger;</sup></a>,
+                    <a href="https://scholar.google.com/citations?hl=zh-CN&user=eddLZ4EAAAAJ" class="author-link" target="_blank">Xioayuan Liu<sup>2,&dagger;</sup></a>,
+                    <a href="https://scholar.google.com/citations?user=Nf1DGhEAAAAJ&hl=zh-CN&oi=sra" class="author-link" target="_blank">Zhendong Luo<sup>2</sup></a>,
+                    <a href="https://chenxinli001.github.io/" class="author-link" target="_blank">Chenxin Li<sup>1</sup></a>, <br>
+                    <a href="https://liuhengyu321.github.io/" class="author-link" target="_blank">Hengyu Liu<sup>1</sup></a>,
+                    
+                    <a href="https://scholar.google.com/citations?user=NYqtWsYAAAAJ&hl=zh-CN" class="author-link" target="_blank">Din Ping Tsai<sup>2,*</sup></a>
+                    <a href="https://scholar.google.com/citations?user=ZNUGBioAAAAJ&hl=zh-CN" class="author-link" target="_blank">Mu Ku Chen<sup>2,*</sup></a>
+                    <a href="https://www.ee.cuhk.edu.hk/~yxyuan/people/people.htm" class="author-link" target="_blank">Yixuan Yuan<sup>1,*</sup></a>
+                </p>
+                <p>
+                    <sup>1</sup>CityU <img src="static/img/logo/CityU_logo.png" alt="CityU logo" style="height: 1em; vertical-align: middle; margin-left: 0px; margin-right: 5px;">,
+                    <sup>2</sup>CUHK <img src="static/img/logo/1_CUHK.jpg" alt="CUHK logo" style="height: 1em; vertical-align: middle; margin-left: 0px; margin-right: 5px;">
+                    
+                </p>
+                <p style="text-align: center; margin-bottom: 0;">
+                    <span class="author-note"><sup>&dagger;</sup>Equal Contribution</span>&emsp;
+                    <span class="author-note"><sup>*</sup>Corresponding author</span>
+                </p>
+                <p style="text-align: center; margin-bottom: 0; color: red; font-weight: bold;">
+                    🌟 ICCV 2025 Highlight 🌟 (Final Rating: 6, 6, 6)
+                </p>
             </div>
-          </div>
         </div>
-      </div>
-    </section> -->
 
-    <section class="hero teaser">
-      <div class="container is-max-desktop">
-        <div class="hero-body" style="text-align: center;">
-          <h2 class="title is-3">Abstract</h2>
-          <div class="hero-body" style="text-align: left;">
-              <p>
-                3D semantic occupancy prediction aims to reconstruct the 3D geometry and semantics of the surrounding
-                environment. With dense voxel labels, prior works typically formulate it as a dense segmentation task,
-                independently classifying each voxel. However, this paradigm neglects critical instance-centric
-                discriminability, leading to instance-level incompleteness and adjacent ambiguities. To address this, we
-                highlight a free lunch of occupancy labels: the voxel-level class label implicitly provides insight at
-                the instance level, which is overlooked by
-                the community. Motivated by this observation, we first introduce a training-free Voxel-to-Instance
-                (VoxNT) trick: a simple yet effective method that freely converts voxel-level class labels into
-                instance-level offset labels. Building on this, we further propose VoxDet, an instance-centric framework
-                that reformulates the voxel-level occupancy prediction as dense object detection by decoupling it into
-                two sub-tasks: offset regression and semantic prediction. Specifically, based on the lifted 3D volume,
-                VoxDet first
-                uses (a) Spatially-decoupled Voxel Encoder to generate disentangled feature volumes for the two
-                sub-tasks, which learn task-specific spatial deformation in the densely projected tri-perceptive space.
-                Then, we deploy (b) Task-decoupled Dense Predictor to address this task via dense detection. Here, we
-                first regress a 4D offset field to estimate distances (6 directions) between voxels and object borders
-                in the voxel space. The regressed offsets are then used to
-                guide the instance-level aggregation in the classification branch, achieving instance-aware prediction.
-                Experiments show that VoxDet can be deployed on both camera and LiDAR input, jointly achieving
-                state-of-the-art results on both benchmarks. VoxDet is not only highly efficient, but also gives 63.0
-                IoU on the SemanticKITTI test set, ranking 1st on the online leaderboard.
 
-              </p>
-          </div>
-        </div>
-      </div>
-    </section>
+        <p class="text">
+            <h2 class="text" style="text-align: center;">Abstract</h2>
+            <d-figure id="fig-comparison" >
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/intro.png" alt="benchmark category">
+                </figure>
+            </d-figure>
+            <p class="text">
 
-    <section class="hero teaser">
-      <div class="container is-max-desktop">
-        <div class="hero-body" style="text-align: center;">
-          <h2 class="title is-3">Acknowledgement</h2>
-          <div class="hero-body" style="text-align: left;">
-            <p style="font-size: 18px;">
-              Thanks so much for the following fantastic projects that inspired us:
-            <ul style="text-align: left; margin: 0 auto; display: inline-block;font-size: 18px; ">
-
-              <li><strong>[FCOS]</strong> <a href="https://arxiv.org/abs/1904.01355">FCOS: Fully Convolutional One-Stage
-                  Object Detection</a></li>
-              <li><strong>[CGFormer]</strong> <a href="https://arxiv.org/abs/2405.13675">Context and Geometry Aware
-                  Voxel Transformer for Semantic Scene Completion</a></li>
-              <li><strong>[SIGMA]</strong> <a href="https://arxiv.org/abs/2203.06398">SIGMA: Semantic-complete Graph
-                  Matching For Domain Adaptive Object Detection</a></li>
-              <li><strong>[TSD]</strong> <a href="https://arxiv.org/abs/2003.07540">Revisiting the Sibling Head in
-                  Object Detector</a></li>
-              <li><strong>[VoxFormer]</strong> <a href="https://arxiv.org/abs/2302.12251">VoxFormer: a Cutting-edge
-                  Baseline for 3D Semantic Occupancy Prediction</a></li>
-
-            </ul>
+            Miniaturized endoscopy has advanced accurate visual perception within the human body. 
+            Prevailing research remains limited to conventional cameras employing convex lenses, where the physical constraints with millimetre-scale thickness impose serious impediments on the micro-level clinical. 
+            Recently, with the emergence of meta-optics, ultra-micro imaging based on metalenses (micron-scale) has garnered great attention, 
+            serving as a promising solution. However, due to the physical difference of metalens, there is a large gap in data acquisition and algorithm research. 
+            In light of this, we aim to bridge this unexplored gap, advancing the novel metalens endoscopy:
+            First, we establish datasets for metalens endoscopy and conduct preliminary optical simulation, identifying two derived optical issues that physically adhere to strong optical priors. </li>
+            Second, we propose MetaScope, a novel optics-driven neural network tailored for metalens endoscopy driven by physical optics. MetaScope comprises two novel designs: Optics-informed Intensity Adjustment (OIA), rectifying intensity decay by learning optical embeddings, and Optics-informed Chromatic Correction (OCC), mitigating chromatic aberration by learning spatial deformations informed by learned Point Spread Function (PSF) distributions. </li>
+            To enhance joint learning, we further deploy a gradient-guided distillation to transfer knowledge from the foundational model adaptively. Extensive experiments demonstrate that MetaScope not only outperforms state-of-the-art methods in both metalens segmentation and restoration but also achieves impressive generalized ability in real biomedical scenes.</li>
             </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-
-    <section class="section" id="BibTeX"
-      style="background-color: #f9f9f9; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-      <div class="container is-max-desktop content" style="max-width: 800px; margin: 0 auto; position: relative;">
-        <h2 class="title" style="font-size: 1.5rem; color: #333; margin-bottom: 0.5rem; text-align: center;">BibTeX</h2>
-        <p style="font-size: 0.9rem; color: #555; text-align: center; margin-bottom: 0.8rem;">
-          If you find our work helpful, please consider citing:
         </p>
-        <div style="position: relative;">
-          <pre
-            style="background-color: #f5f5f5; color: #2d2d2d; padding: 1rem; border-radius: 6px; font-size: 0.9rem; line-height: 1.4; overflow-x: auto; border: 1px solid #ddd; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); margin: 0;">
-<code id="bibtex-code">
-@article{li2025voxdet,
-  title={VoxDet: Rethinking 3D Semantic Occupancy Prediction as Dense Object Detection},
-  author={Li, Wuyang and Yu, Zhu and Alahi, Alexandre},
-  journal={arXiv preprint arXiv:2506.04623},
-  year={2025}
-}
-</code>
-      </pre>
-          <button id="copy-button"
-            style="position: absolute; top: 10px; right: 10px; background-color: #007BFF; color: #fff; border: none; border-radius: 5px; padding: 0.4rem 1rem; cursor: pointer; font-size: 0.8rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
-            Copy
-          </button>
-        </div>
-      </div>
-    </section>
+
+        <p class="text">
+            <h2 class="text" style="text-align: center;">Motivation</h2>
+            <p class="text">
+            <h3 class="text" >Existing Challenges in Metalens Image</h3>
+            <ul style="padding-left: 0em; margin-left: 0;">
+                <li><b>Color and Position-Dependent Intensity Loss.</b>  Color- and position-dependent intensity loss is caused by wavelength-sensitive meta-atom responses leading to RGB imbalance, and off-axis efficiency drop with cos⁴θ vignetting causing peripheral darkening and structured noise.</li>
+                <li><b>Color-Dependent Blur and Misalignment.</b> Color-dependent blur and misalignment arise from wavelength-dependent PSF variations in metalenses, causing defocus and chromatic fringing due to imperfect phase compensation and focal length mismatch across RGB channels. </li>
+            </ul>
+            <h3 class="text" >Our Solution</h3>
+            <ul style="padding-left: 0em; margin-left: 0;">
+                <li>To fully leverage observed optical priors, we propose to encode the efficiency and radial priors to adjust the feature
+                    learning with restoration awareness</li>
+                <li>We propose a novel solution by estimating the full-color PSF distribution via learning inherent Gaussian mixtures adaptively, thereby spatially
+                    guiding correction of chromatic aberrations</li>
+            </ul>
+
+            </p>
+        </p>
+
+        <p class="text">
+            <h2 class="text" style="text-align: center;">Framework of MetaScope</h2>
+            <d-figure id="fig-framework" >
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/MetaScope_framework.png" alt="framework">
+                </figure>
+            </d-figure>
+            <ul style="padding-left: 0em; margin-left: 0;">
+                <li><b>Optics-informed Intensity Adjustment.</b> 
+                    Metalens images experience severe attenuation in adhering to specific priors.
+                    We design an optics-informed intensity adjustment module to effectively correct channel- and spatial-wise attenuation in metalens images by embedding color- and position-dependent optical priors.</li>
+                <li><b>Optics-informed Chromatic Correction</b> Metalens images suffer from chromatic artifacts due to
+                    wavelength-specific PSFs. Considering the difficulty in estimating explicit PSFs. we model the implicit PFS distribution via Gaussian Mixture Models (GMM) in an adaptive
+                    manner for chromatic correction</li>
+            </ul>
+        </p>
+
+        <p class="text">
+            <h2 class="text" style="text-align: center;">Benchmark</h2>
+            <h3 class="text" >Dataset</h3>
+            <p class="text">
+                We construct five benchmark datasets focused on two key clinical tasks: diagnosis and surgery. 
+                By projecting public datasets onto a screen and capturing them with a metalens system, we generate corresponding image triplets at high resolution. 
+                This supports two research directions—segmentation and restoration using metalens images
+            </p>
+            <h3 class="text" >Metrics</h3>
+            <ol style="padding-left: 0em; margin-left: 0;">
+                <li>Clinical assistance: Metalens segmentation adopts mIoU and mDICE (IoU/DICE for single-class datasets). </li>
+                <li>Clinical visualization: Metalens restoration uses PSNR and SSIM.</li>
+            </ol>
+        </p>
+
+        
+
+        <p class="text">
+            <h2 class="text" style="text-align: center;">Experimental Results</h2>
+            <h3 class="text" >MetaScope Leader Board</h3>
+            <p class="text">
+            Comparison with state-of-the-art methods on five benchmarks in terms of metalens segmentation (top) and restoration (bottom)
+            </p>
+            <d-figure id="fig-framework" >
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/leader.jpg" alt="framework">
+                </figure>
+            </d-figure>
+            
+            <p class="text">
+                Comparison between conventional systems using high quality ground-truth images without Meta, and our metalens system using the degraded images in Meta version dataset.
+            </p>
+            <d-figure id="fig-framework" >
+                <figure style="text-align: center;">
+                    <img data-zoomable="" draggable="false" src="static/img/MetaVSConvex.png" alt="framework" style="width: 70%;">
+                </figure>
+            </d-figure>
 
 
-    <!-- Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
+            <h3 class="text" >Visual Results</h3>
+            <p class="text">
+                Qualitative comparison in terms of state-of-the-art segmentation methods and image restoration methods.
+            </p>
+            <d-figure id="fig-framework" >
+                <figure >
+                    <img data-zoomable="" draggable="false" src="static/img/seg.png" alt="framework">
+                </figure>
+            </d-figure>
 
-      // 容器与场景、相机、渲染器
-      const container = document.getElementById('voxel-container');
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(
-        45,
-        container.clientWidth / container.clientHeight,
-        0.1,
-        1000
-      );
-      camera.position.set(100, 100, 140);
-      camera.lookAt(0, 0, 0);
+            <p class="text">
+                Qualitative comparison of state-of-the-art <b>segmentation</b> methods on Meta-CVC-Colon, Meta-Kvasir-Seg and Meta-EndoVis-18.
+            </p>
+            <d-figure id="fig-framework" >
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/supp_seg.png" alt="framework">
+                </figure>
+            </d-figure>
 
-      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setSize(container.clientWidth, container.clientHeight);
-      container.appendChild(renderer.domElement);
-
-      // 灯光
-      scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-      const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-      dirLight.position.set(1, 1, 0.5);
-      scene.add(dirLight);
-
-      // 父级组：体素 + 箭头 + 外框
-      const rotateGroup = new THREE.Group();
-      scene.add(rotateGroup);
-
-      // 1. 体素群：蓝到粉渐变 & 半透明
-      const voxelGroup = new THREE.Group();
-      const size = 5;
-      const cubeSize = 14;
-      const spacing = 18;
-      const blueColor = new THREE.Color(0x036bfc);
-      const pinkColor = new THREE.Color(0xe250ff);
-      const baseMat = new THREE.MeshStandardMaterial({
-        transparent: true,
-        opacity: 0.3
-      });
-      const maxSum = (size - 1) * 3;
-
-      for (let x = 0; x < size; x++) {
-        for (let y = 0; y < size; y++) {
-          for (let z = 0; z < size; z++) {
-            const t = (x + y + z) / maxSum;
-            const mat = baseMat.clone();
-            mat.color.copy(blueColor).lerp(pinkColor, t);
-
-            const geo = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
-            const mesh = new THREE.Mesh(geo, mat);
-            mesh.position.set(
-              (x - (size - 1) / 2) * spacing,
-              (y - (size - 1) / 2) * spacing,
-              (z - (size - 1) / 2) * spacing
-            );
-            voxelGroup.add(mesh);
-          }
-        }
-      }
-      rotateGroup.add(voxelGroup);
-
-      // 2. 外部黑色细边框（包围整个体素群）
-      {
-        // 计算边框尺寸：spacing*(size-1) + cubeSize
-        const boundSize = (size - 1) * spacing + cubeSize;
-        const boxGeo = new THREE.BoxGeometry(boundSize, boundSize, boundSize);
-        const edgesGeo = new THREE.EdgesGeometry(boxGeo);
-        const lineMat = new THREE.LineBasicMaterial({ color: 0x4B0082, linewidth: 1 });
-        const border = new THREE.LineSegments(edgesGeo, lineMat);
-        rotateGroup.add(border);
-      }
-
-      // 3. 六方向加粗箭头
-      const halfExt = (size - 1) / 2 * spacing + cubeSize / 2;
-      const arrowLen = halfExt + 20;
-      const headLength = 12, headWidth = 12;
-      function addArrow(dir, color) {
-        const arrow = new THREE.ArrowHelper(
-          dir.clone().normalize(),
-          new THREE.Vector3(),
-          arrowLen,
-          color,
-          headLength,
-          headWidth
-        );
-        // 尝试加宽箭身（部分平台对 linewidth 支持有限）
-        arrow.line.material.linewidth = 3;
-        rotateGroup.add(arrow);
-      }
-
-      addArrow(new THREE.Vector3(1, 0, 0), 0xff0000);
-      addArrow(new THREE.Vector3(-1, 0, 0), 0xaa0000);
-      addArrow(new THREE.Vector3(0, 1, 0), 0x00ff00);
-      addArrow(new THREE.Vector3(0, -1, 0), 0x00aa00);
-      addArrow(new THREE.Vector3(0, 0, 1), 0x0000ff);
-      addArrow(new THREE.Vector3(0, 0, -1), 0x0000aa);
-
-      // 动画：旋转整个组
-      function animate() {
-        requestAnimationFrame(animate);
-        rotateGroup.rotation.x += 0.005;
-        rotateGroup.rotation.y += 0.01;
-        renderer.render(scene, camera);
-      }
-      animate();
-
-      // 自适应容器尺寸变化
-      window.addEventListener('resize', () => {
-        const w = container.clientWidth, h = container.clientHeight;
-        renderer.setSize(w, h);
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
-      });
+            <p class="text">
+                Qualitative comparison with state-of-the-art <b>restoration</bb> methods on Meta-CVC-Colon, Meta-Kvasir-Seg and Meta-EndoVis-18.
+            </p>
+            <d-figure id="fig-framework" >
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/resto.png" alt="framework">
+                </figure>
+            </d-figure>
 
 
-      // 获取代码块和按钮
-      const copyButton = document.getElementById("copy-button");
-      const bibtexCode = document.getElementById("bibtex-code").innerText;
+            <h3 class="text" >Futher Analysis</h3>
+            <p class="text">
+                Detailed ablation study of the proposed modules on the Meta-CVC-Clinic benchmark
+            </p>
+            <d-figure id="fig-framework" >
+                <figure style="text-align: center;">
+                    <img data-zoomable="" draggable="false" src="static/img/ab.jpg" alt="framework" style="width: 70%;">
+                </figure>
+            </d-figure>
 
-      // 添加点击事件
-      copyButton.addEventListener("click", () => {
-        // 将代码复制到剪贴板
-        navigator.clipboard.writeText(bibtexCode).then(() => {
-          // 显示反馈文本
-          copyButton.textContent = "Copied!";
-          // 2秒后恢复为 "Copy"
-          setTimeout(() => {
-            copyButton.textContent = "Copy";
-          }, 2000);
-        }).catch((err) => {
-          console.error("Failed to copy text: ", err);
-        });
-      });
-    </script>
-  </body>
+            <p class="text">
+                Heatmaps of the feature before and after each module.
+            </p>
+            <d-figure id="fig-framework" >
+                <figure>
+                    <img data-zoomable="" draggable="false" src="static/img/feat4.png" alt="framework">
+                </figure>
+            </d-figure>
 
+            <p class="text">
+                Sensitivity analysis of the simulated optical prior and hyper-parameters on the Meta-EndoVis-17 benchmark
+            </p>
+            <d-figure id="fig-framework" >
+                <figure style="text-align: center;">
+                    <img data-zoomable="" draggable="false" src="static/img/sen.jpg" alt="framework" style="width: 70%;">
+                </figure>
+            </d-figure>
+
+        </p>
+
+
+        
+            <h3>BibTeX</h3>
+            <p class="bibtex">
+                @article{li2025metascope,<br>
+                &nbsp;&nbsp;title={MetaScope: Optics-Driven Neural Network for Ultra-Micro Metalens Endoscopy},<br>
+                &nbsp;&nbsp;author={Li, Wuyang and Pan, Wentao and Liu, Xiaoyuan and Li, Chenxin and Liu, Hengyu and Tsai, Din Ping and Chen, Mu Ku and Yuan, Yixuan},<br>
+                &nbsp;&nbsp;journal={arXiv preprint},<br>
+                &nbsp;&nbsp;year={2025}<br>
+                }
+            </p>
+            <p class="text">
+                The website template was originally borrowed from <a href="https://cambrian-mllm.github.io/">here</a>.
+            </p>
+            <d-footnote-list></d-footnote-list>
+            <d-citation-list></d-citation-list>
+        
+        <!-- bibliography will be inlined during Distill pipeline's pre-rendering -->
+        
+        <script src="./static/js/nav-bar.js"></script>
+    </body>
 </html>
-</body>
 
-</html>
