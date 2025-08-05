@@ -259,26 +259,27 @@
 
 
         
-            <h3>BibTeX</h3>
-            <div style="position: relative;">
-                <button onclick="copyBibTeX()" style="position: absolute; top: 10px; right: 10px; background: #667eea; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 12px; z-index: 10; transition: background 0.3s ease;" onmouseover="this.style.background='#5a6fd8'" onmouseout="this.style.background='#667eea'">
+            <h3 style="color: #2c3e50; font-size: 1.5em; margin-bottom: 1em; border-bottom: 2px solid #667eea; padding-bottom: 0.5em;">📄 BibTeX Citation</h3>
+            <div style="position: relative; margin: 1.5em 0;">
+                <button onclick="copyBibTeX()" style="position: absolute; top: 15px; right: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; z-index: 10; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(102, 126, 234, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(102, 126, 234, 0.3)'">
                     📋 Copy
                 </button>
-                <p class="bibtex" id="bibtex-content">
-                    @article{li2025metascope,<br>
-                    &nbsp;&nbsp;title={MetaScope: Optics-Driven Neural Network for Ultra-Micro Metalens Endoscopy},<br>
-                    &nbsp;&nbsp;author={Li, Wuyang and Pan, Wentao and Liu, Xiaoyuan and Li, Chenxin and Liu, Hengyu and Tsai, Din Ping and Chen, Mu Ku and Yuan, Yixuan},<br>
-                    &nbsp;&nbsp;journal={arXiv preprint},<br>
-                    &nbsp;&nbsp;year={2025}<br>
-                    }
-                </p>
+                <div  id="bibtex-content" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border: 2px solid #dee2e6; border-radius: 12px; padding: 25px 25px 25px 25px; margin: 0; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #667eea, #764ba2);"></div>
+                    <pre>@inproceedings{li2025metascope,
+    title={MetaScope: Optics-Driven Neural Network for Ultra-Micro Metalens Endoscopy},
+    author={Li, Wuyang and Pan, Wentao and Liu, Xiaoyuan and Li, Chenxin and Liu, Hengyu and Tsai, Din Ping and Chen, Mu Ku and Yuan, Yixuan},
+    journal={ICCV},
+    year={2025}
+    }</pre>
+                </div>
             </div>
             <script>
                 function copyBibTeX() {
-                    const bibtexText = `@article{li2025metascope,
+                    const bibtexText = `@inproceedings{li2025metascope,
   title={MetaScope: Optics-Driven Neural Network for Ultra-Micro Metalens Endoscopy},
   author={Li, Wuyang and Pan, Wentao and Liu, Xiaoyuan and Li, Chenxin and Liu, Hengyu and Tsai, Din Ping and Chen, Mu Ku and Yuan, Yixuan},
-  journal={arXiv preprint},
+  journal={ICCV},
   year={2025}
 }`;
                     
@@ -286,10 +287,10 @@
                         const button = event.target;
                         const originalText = button.innerHTML;
                         button.innerHTML = '✅ Copied!';
-                        button.style.background = '#28a745';
+                        button.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
                         setTimeout(function() {
                             button.innerHTML = originalText;
-                            button.style.background = '#667eea';
+                            button.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
                         }, 2000);
                     }).catch(function(err) {
                         console.error('Failed to copy: ', err);
