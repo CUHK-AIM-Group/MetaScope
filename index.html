@@ -43,21 +43,21 @@
 
                     <div class="button-container">
                         <!-- replace arxiv -->
-                        <a href="https://metascope-endo.github.io/" class="button paper-link" target="_blank">
+                        <a href="https://github.com/CUHK-AIM-Group/MetaScope/" class="button paper-link" target="_blank">
                             <span class="icon is-small">
                                 <i class="ai ai-arxiv "  style="height: 1.5em;"></i>
                             </span>
                             arXiv
                         </a>
-                        <!-- replace pdf -->
-                        <a href="https://metascope-endo.github.io/" class="button paper-link" target="_blank">
+                        <!-- replace data -->
+                        <a href="https://github.com/CUHK-AIM-Group/MetaScope/" class="button paper-link" target="_blank">
                             <span class="icon is-small"  style="height: 1.5em;">
-                                <i class="fas fa-file-pdf"></i>
+                                <i class="fas fa-database"></i>
                             </span>
-                            <span>pdf</span>
+                            <span>Data</span>
                         </a>
                         <!-- replace image -->
-                        <a href="https://metascope-endo.github.io/" class="button" target="_blank">
+                        <a href="https://github.com/CUHK-AIM-Group/MetaScope/" class="button" target="_blank">
                             <span class="icon is-small"  style="height: 1.5em;">
                                 <i class="fab fa-github"></i>
                             </span>
@@ -262,24 +262,24 @@
             <h3 style="color: #2c3e50; font-size: 1.5em; margin-bottom: 1em; border-bottom: 2px solid #667eea; padding-bottom: 0.5em;">📄 BibTeX Citation</h3>
             <div style="position: relative; margin: 1.5em 0;">
                 <button onclick="copyBibTeX()" style="position: absolute; top: 15px; right: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; z-index: 10; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(102, 126, 234, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(102, 126, 234, 0.3)'">
-                    📋 Copy
+                    📋 Copy Citation
                 </button>
-                <div  id="bibtex-content" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border: 2px solid #dee2e6; border-radius: 12px; padding: 25px 25px 25px 25px; margin: 0; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); position: relative; overflow: hidden;">
+                <div class="bibtex" id="bibtex-content" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border: 2px solid #dee2e6; border-radius: 12px; padding: 25px 25px 25px 25px; margin: 0; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); position: relative; overflow: hidden;">
                     <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #667eea, #764ba2);"></div>
-                    <pre>@inproceedings{li2025metascope,
-    title={MetaScope: Optics-Driven Neural Network for Ultra-Micro Metalens Endoscopy},
-    author={Li, Wuyang and Pan, Wentao and Liu, Xiaoyuan and Li, Chenxin and Liu, Hengyu and Tsai, Din Ping and Chen, Mu Ku and Yuan, Yixuan},
-    journal={ICCV},
-    year={2025}
-    }</pre>
+                    <pre style="margin: 0; font-family: 'Fira Code', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace; font-size: 14px; line-height: 1.6; color: #2c3e50; white-space: pre-wrap; word-wrap: break-word;">@article{li2025metascope,
+  title={MetaScope: Optics-Driven Neural Network for Ultra-Micro Metalens Endoscopy},
+  author={Li, Wuyang and Pan, Wentao and Liu, Xiaoyuan and Li, Chenxin and Liu, Hengyu and Tsai, Din Ping and Chen, Mu Ku and Yuan, Yixuan},
+  journal={arXiv preprint},
+  year={2025}
+}</pre>
                 </div>
             </div>
             <script>
                 function copyBibTeX() {
-                    const bibtexText = `@inproceedings{li2025metascope,
+                    const bibtexText = `@article{li2025metascope,
   title={MetaScope: Optics-Driven Neural Network for Ultra-Micro Metalens Endoscopy},
   author={Li, Wuyang and Pan, Wentao and Liu, Xiaoyuan and Li, Chenxin and Liu, Hengyu and Tsai, Din Ping and Chen, Mu Ku and Yuan, Yixuan},
-  journal={ICCV},
+  journal={arXiv preprint},
   year={2025}
 }`;
                     
