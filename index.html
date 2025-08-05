@@ -66,7 +66,7 @@
                     </div>
                 </div>
                 <div class="header-image">
-                    <img draggable="false" src="static/img/metascope.png" alt="Teaser Image" class="teaser-image">
+                    <img draggable="false" src="static/img/metascope2.png" alt="Teaser Image" class="teaser-image">
                 </div>
             </div>
         </div>
@@ -74,16 +74,16 @@
         <div class="byline">
             <div class="byline-container" style="text-align: center;">
                 <p>
-                    <a href="https://wymancv.github.io/wuyang.github.io/" class="author-link" target="_blank">Wuyang Li<sup>1,&dagger;</sup></a>,
-                    <a href="https://scholar.google.com/citations?hl=zh-CN&user=sHKkAToAAAAJ&view_op=list_works&sortby=pubdate" class="author-link" target="_blank">Wentao Pan<sup>1,&dagger;</sup></a>,
-                    <a href="https://scholar.google.com/citations?hl=zh-CN&user=eddLZ4EAAAAJ" class="author-link" target="_blank">Xiaoyuan Liu<sup>2,3,&dagger;</sup></a>,
+                    <a href="https://wymancv.github.io/wuyang.github.io/" class="author-link" target="_blank">Wuyang Li<sup>1,3,*</sup></a>,
+                    <a href="https://scholar.google.com/citations?hl=zh-CN&user=sHKkAToAAAAJ&view_op=list_works&sortby=pubdate" class="author-link" target="_blank">Wentao Pan<sup>1,*</sup></a>,
+                    <a href="https://scholar.google.com/citations?hl=zh-CN&user=eddLZ4EAAAAJ" class="author-link" target="_blank">Xiaoyuan Liu<sup>2,3,*</sup></a>,
                     <a href="https://scholar.google.com/citations?user=Nf1DGhEAAAAJ&hl=zh-CN&oi=sra" class="author-link" target="_blank">Zhendong Luo<sup>2</sup></a>,
                     <a href="https://chenxinli001.github.io/" class="author-link" target="_blank">Chenxin Li<sup>1</sup></a>, <br>
                     <a href="https://liuhengyu321.github.io/" class="author-link" target="_blank">Hengyu Liu<sup>1</sup></a>,
-                    
-                    <a href="https://scholar.google.com/citations?user=NYqtWsYAAAAJ&hl=zh-CN" class="author-link" target="_blank">Din Ping Tsai<sup>2,*</sup></a>,
-                    <a href="https://scholar.google.com/citations?user=ZNUGBioAAAAJ&hl=zh-CN" class="author-link" target="_blank">Mu Ku Chen<sup>2,*</sup></a>,
-                    <a href="https://www.ee.cuhk.edu.hk/~yxyuan/people/people.htm" class="author-link" target="_blank">Yixuan Yuan<sup>1,*</sup></a>
+        
+                    <a href="https://scholar.google.com/citations?user=NYqtWsYAAAAJ&hl=zh-CN" class="author-link" target="_blank">Din Ping Tsai<sup>2,&dagger;</sup></a>,
+                    <a href="https://scholar.google.com/citations?user=ZNUGBioAAAAJ&hl=zh-CN" class="author-link" target="_blank">Mu Ku Chen<sup>2,&dagger;</sup></a>,
+                    <a href="https://www.ee.cuhk.edu.hk/~yxyuan/people/people.htm" class="author-link" target="_blank">Yixuan Yuan<sup>1,&dagger;</sup></a>
                 </p>
                 <p>
                     <sup>1</sup>CUHK <img src="static/img/logo/1_CUHK.jpg" alt="CUHK logo" style="height: 1em; vertical-align: middle; margin-left: 0px; margin-right: 5px;">,
@@ -92,10 +92,10 @@
                     
                 </p>
                 <p style="text-align: center; margin-bottom: 0;">
-                    <span class="author-note"><sup>&dagger;</sup>Equal Contribution</span>&emsp;
-                    <span class="author-note"><sup>*</sup>Corresponding author</span>
+                    <span class="author-note"><sup>*</sup>Equal Contribution</span>&emsp;
+                    <span class="author-note"><sup>&dagger;</sup>Corresponding author</span>
                 </p>
-                <p style="text-align: center; margin-bottom: 0; color: red; font-weight: bold;">
+                <p class="highlight-text" style="text-align: center; margin-bottom: 0; font-weight: bold;">
                     🌟 ICCV 2025 Highlight 🌟 (Final Rating: 6, 6, 6)
                 </p>
             </div>
@@ -103,34 +103,30 @@
 
 
         <p class="text">
-            <h2 class="text" style="text-align: center;">Abstract</h2>
+            <h2 class="text" style="text-align: center;">TL;DR</h2>
             <d-figure id="fig-comparison" >
                 <figure>
                     <img data-zoomable="" draggable="false" src="static/img/intro.png" alt="benchmark category">
                 </figure>
             </d-figure>
             <p class="text">
-
-            Miniaturized endoscopy has advanced accurate visual perception within the human body. 
-            Prevailing research remains limited to conventional cameras employing convex lenses, where the physical constraints with millimetre-scale thickness impose serious impediments on the micro-level clinical. 
-            Recently, with the emergence of meta-optics, ultra-micro imaging based on metalenses (micron-scale) has garnered great attention, 
-            serving as a promising solution. However, due to the physical difference of metalens, there is a large gap in data acquisition and algorithm research. 
-            In light of this, we aim to bridge this unexplored gap, advancing the novel metalens endoscopy:
-            First, we establish datasets for metalens endoscopy and conduct preliminary optical simulation, identifying two derived optical issues that physically adhere to strong optical priors. </li>
-            Second, we propose MetaScope, a novel optics-driven neural network tailored for metalens endoscopy driven by physical optics. MetaScope comprises two novel designs: Optics-informed Intensity Adjustment (OIA), rectifying intensity decay by learning optical embeddings, and Optics-informed Chromatic Correction (OCC), mitigating chromatic aberration by learning spatial deformations informed by learned Point Spread Function (PSF) distributions. </li>
-            To enhance joint learning, we further deploy a gradient-guided distillation to transfer knowledge from the foundational model adaptively. Extensive experiments demonstrate that MetaScope not only outperforms state-of-the-art methods in both metalens segmentation and restoration but also achieves impressive generalized ability in real biomedical scenes.</li>
+            Unlike conventional endoscopes limited by millimeter-scale thickness, metalenses operate at the micron scale, serving as a promising solution for ultra-miniaturized endoscopy. However, metalenses suffer from intensity decay and chromatic aberration. To address this, we developed MetaScope, an optics-driven neural network for metalens-based endoscopy, offering a promising pathway for next-generation ultra-miniaturized medical imaging devices.
+            </p>
+            <p class="text" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 20px; border-left: 4px solid #667eea; border-radius: 8px; margin: 2em auto; font-style: italic;">
+                <strong>We pioneer a new direction in advancing in-vivo intelligence by integrating <span style="color: #667eea; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">OPTICAL SCIENCE</span>, <span style="color: #667eea; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">BIOLOGICAL SCIENCE</span>, and <span style="color: #667eea; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">COMPUTER SCIENCE</span>.</strong>
             </p>
         </p>
 
         <p class="text">
             <h2 class="text" style="text-align: center;">Motivation</h2>
             <p class="text">
-            <h3 class="text" >Existing Challenges in Metalens Image</h3>
+   
             <d-figure id="fig-framework" >
                 <figure>
                     <img data-zoomable="" draggable="false" src="static/img/pre3.png" alt="framework">
                 </figure>
             </d-figure>
+                <h3 class="text" >Existing Challenges in Metalens Image</h3>
             <ul style="padding-left: 0em; margin-left: 0;">
                 <li><b>Color and Position-Dependent Intensity Loss.</b>  Color- and position-dependent intensity loss is caused by wavelength-sensitive meta-atom responses leading to RGB imbalance, and off-axis efficiency drop with cos⁴θ vignetting causing peripheral darkening and structured noise.</li>
                 <li><b>Color-Dependent Blur and Misalignment.</b> Color-dependent blur and misalignment arise from wavelength-dependent PSF variations in metalenses, causing defocus and chromatic fringing due to imperfect phase compensation and focal length mismatch across RGB channels. </li>
@@ -197,7 +193,7 @@
             </p>
             <d-figure id="fig-framework" >
                 <figure style="text-align: center;">
-                    <img data-zoomable="" draggable="false" src="static/img/MetaVSConvex.png" alt="framework" style="width: 70%;">
+                    <img data-zoomable="" draggable="false" src="static/img/MetaVSConvex.png" alt="framework" style="width: 100%;">
                 </figure>
             </d-figure>
 
@@ -237,7 +233,7 @@
             </p>
             <d-figure id="fig-framework" >
                 <figure style="text-align: center;">
-                    <img data-zoomable="" draggable="false" src="static/img/ab.jpg" alt="framework" style="width: 70%;">
+                    <img data-zoomable="" draggable="false" src="static/img/ab.jpg" alt="framework" style="width: 100%;">
                 </figure>
             </d-figure>
 
@@ -255,7 +251,7 @@
             </p>
             <d-figure id="fig-framework" >
                 <figure style="text-align: center;">
-                    <img data-zoomable="" draggable="false" src="static/img/sen.jpg" alt="framework" style="width: 70%;">
+                    <img data-zoomable="" draggable="false" src="static/img/sen.jpg" alt="framework" style="width: 100%;">
                 </figure>
             </d-figure>
 
@@ -264,17 +260,46 @@
 
         
             <h3>BibTeX</h3>
-            <p class="bibtex">
-                @article{li2025metascope,<br>
-                &nbsp;&nbsp;title={MetaScope: Optics-Driven Neural Network for Ultra-Micro Metalens Endoscopy},<br>
-                &nbsp;&nbsp;author={Li, Wuyang and Pan, Wentao and Liu, Xiaoyuan and Li, Chenxin and Liu, Hengyu and Tsai, Din Ping and Chen, Mu Ku and Yuan, Yixuan},<br>
-                &nbsp;&nbsp;journal={arXiv preprint},<br>
-                &nbsp;&nbsp;year={2025}<br>
+            <div style="position: relative;">
+                <button onclick="copyBibTeX()" style="position: absolute; top: 10px; right: 10px; background: #667eea; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 12px; z-index: 10; transition: background 0.3s ease;" onmouseover="this.style.background='#5a6fd8'" onmouseout="this.style.background='#667eea'">
+                    📋 Copy
+                </button>
+                <p class="bibtex" id="bibtex-content">
+                    @article{li2025metascope,<br>
+                    &nbsp;&nbsp;title={MetaScope: Optics-Driven Neural Network for Ultra-Micro Metalens Endoscopy},<br>
+                    &nbsp;&nbsp;author={Li, Wuyang and Pan, Wentao and Liu, Xiaoyuan and Li, Chenxin and Liu, Hengyu and Tsai, Din Ping and Chen, Mu Ku and Yuan, Yixuan},<br>
+                    &nbsp;&nbsp;journal={arXiv preprint},<br>
+                    &nbsp;&nbsp;year={2025}<br>
+                    }
+                </p>
+            </div>
+            <script>
+                function copyBibTeX() {
+                    const bibtexText = `@article{li2025metascope,
+  title={MetaScope: Optics-Driven Neural Network for Ultra-Micro Metalens Endoscopy},
+  author={Li, Wuyang and Pan, Wentao and Liu, Xiaoyuan and Li, Chenxin and Liu, Hengyu and Tsai, Din Ping and Chen, Mu Ku and Yuan, Yixuan},
+  journal={arXiv preprint},
+  year={2025}
+}`;
+                    
+                    navigator.clipboard.writeText(bibtexText).then(function() {
+                        const button = event.target;
+                        const originalText = button.innerHTML;
+                        button.innerHTML = '✅ Copied!';
+                        button.style.background = '#28a745';
+                        setTimeout(function() {
+                            button.innerHTML = originalText;
+                            button.style.background = '#667eea';
+                        }, 2000);
+                    }).catch(function(err) {
+                        console.error('Failed to copy: ', err);
+                        alert('Failed to copy to clipboard');
+                    });
                 }
-            </p>
-            <p class="text">
-                The website template was originally borrowed from <a href="https://cambrian-mllm.github.io/">here</a>.
-            </p>
+            </script>
+            <!-- <p class="text"> -->
+                <!-- The website template was originally borrowed from <a href="https://cambrian-mllm.github.io/">here</a>. -->
+            <!-- </p> -->
             <d-footnote-list></d-footnote-list>
             <d-citation-list></d-citation-list>
         
