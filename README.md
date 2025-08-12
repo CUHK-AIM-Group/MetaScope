@@ -17,6 +17,15 @@ Contact: [wuyang.li@epfl.ch](mailto:wuyang.li@epfl.ch)
 
 ### We pioneer a new direction in advancing in-vivo intelligence by integrating `<span style="color:red;">`*THREE TYPES OF SCIENCE*: optical science, biological science, and computer science.
 
+
+
+##  🎯 Takehome message
+
+- Paper Motivation: How to initiate a new AI-for-Science direction by drawing inspiration from interdisciplinary fields.
+- Methodology Design: Approaches for developing methods inspired by nature and scientific principles.
+- Academic Path: Our benchmark (requires only 2 commercial GPUs) is easy to follow, which enables you to publish high-quality papers and supports your academic journey, such as graduation.
+- Experimental Validation: Strategies for designing tailored experiments to rigorously justify each module.
+
 ## 📋 TODO List
 
 - [X] Release the arXiv paper
