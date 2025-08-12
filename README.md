@@ -17,13 +17,11 @@ Contact: [wuyang.li@epfl.ch](mailto:wuyang.li@epfl.ch)
 
 ### We pioneer a new direction in advancing in-vivo intelligence by integrating *THREE TYPES OF SCIENCE*: optical science, biological science, and computer science.
 
-
-
 ##  🎯 Takehome message
 
 - Paper Motivation: How to initiate a new AI-for-Science direction by drawing inspiration from interdisciplinary fields.
 - Methodology Design: Approaches for developing methods inspired by nature and scientific principles.
-- Academic Path: Our benchmark (requires only 2 commercial GPUs) is easy to follow, which enables you to publish high-quality papers and supports your academic journey, such as graduation.
+- Academic Path: Our benchmark (requires only 2 commercial GPUs) is easy to follow, which may help you publish follow-up innovative papers and support academic journey, such as graduation.
 - Experimental Validation: Strategies for designing tailored experiments to rigorously justify each module.
 
 ## 📋 TODO List
@@ -40,8 +38,8 @@ If you think our work is helpful for your project, I would greatly appreciate it
 ```bibtex
 @article{li2025metascope,
   title={MetaScope: Optics-Driven Neural Network for Ultra-Micro Metalens Endoscopy},
-  author={Li, Wuyang and Pan, Wentao and Liu, Xiaoyuan and Li, Chenxin and Liu, Hengyu and Tsai, Din Ping and Chen, Mu Ku and Yuan, Yixuan},
-  journal={arXiv preprint},
+  author={Li, Wuyang and Pan, Wentao and Liu, Xiaoyuan and Luo, Zhendong and Li, Chenxin and Liu, Hengyu and Tsai, Din Ping and Chen, Mu Ku and Yuan, Yixuan},
+  journal={arXiv preprint arXiv:2508.03596},
   year={2025}
 }
 ```
